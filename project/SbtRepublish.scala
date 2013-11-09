@@ -133,6 +133,8 @@ object SbtRepublish extends Build {
       // and then use the Classpaths.managedJars method to filter only src jars.
       libraryDependencies <+= originalSbtVersion { "org.scala-sbt" % "compiler-integration" % _ % (AssembleSources.name + "->*") },
       libraryDependencies <+= scalaVersion { "org.scala-lang" % "scala-compiler" % _ },
+      libraryDependencies <+= scalaBinaryVersion { bv => "org.scala-lang.modules" % "scala-compiler-doc_$bv" % "1.0.0-RC1" },
+      libraryDependencies <+= scalaBinaryVersion { bv => "org.scala-lang.modules" % "scala-compiler-interactive_$bv" % "1.0.0-RC1" },
       managedClasspath in Deps <<= (classpathTypes, update) map { (types, up) => Classpaths.managedJars(Deps, types, up) },
       managedClasspath in AssembleSources <<= (updateClassifiers) map { (up) => Classpaths.managedJars(AssembleSources, Set("src"), up) },
       fullClasspath in assembly <<= managedClasspath in Deps,
